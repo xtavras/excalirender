@@ -127,6 +127,32 @@ Built on Debian Bullseye (glibc 2.31) for broad compatibility:
 
 Alpine uses musl libc. A musl-built binary requires `/lib/ld-musl-x86_64.so.1` as its ELF interpreter, which doesn't exist on glibc systems. Bundling musl's linker and invoking it directly breaks Bun's standalone binary detection. Debian Bullseye provides glibc 2.31, which is old enough to be compatible with most modern distros while avoiding the musl/glibc mismatch.
 
+## Native macOS Bundle (`scripts/build-macos.sh`)
+
+### Strategy
+
+The `canvas` package ships a prebuilt darwin-arm64 addon. Its Cairo, Pango and other dylibs sit next to `canvas.node` and load via `@loader_path`. Bun extracts the embedded `canvas.node` to a temp directory at runtime, so `@loader_path` no longer points at the dylibs. The launcher sets `DYLD_LIBRARY_PATH` to the bundled `lib/` directory, and dyld finds the dylibs there by file name.
+
+### Build
+
+Must run on macOS arm64 after `bun install`:
+
+```bash
+bun run build:macos
+# Output: dist/excalirender-darwin-arm64.tar.gz
+```
+
+### Tarball Contents
+
+```
+excalirender/
+├── bin/
+│   ├── excalirender       # Shell launcher (sets DYLD_LIBRARY_PATH)
+│   └── excalirender.bin   # Bun standalone binary
+└── lib/
+    └── *.dylib            # Dylibs from node_modules/canvas/build/Release
+```
+
 ## Testing
 
 ### Visual Regression Tests (Docker)

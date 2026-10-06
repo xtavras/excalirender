@@ -71,9 +71,9 @@ The install script is a POSIX shell script (`/bin/sh`) with no bash-specific fea
 
 Steps:
 
-1. **Preflight checks** — verifies Linux x86_64, checks for `curl`/`wget` and `tar`
+1. **Preflight checks** — verifies Linux x86_64 or macOS arm64, checks for `curl`/`wget` and `tar`
 2. **Version resolution** — queries the GitHub Releases API for the latest tag, or uses the `VERSION` env var
-3. **Download** — fetches the `excalirender-linux-x64.tar.gz` tarball from the GitHub release
+3. **Download** — fetches the `excalirender-linux-x64.tar.gz` (or `excalirender-darwin-arm64.tar.gz`) tarball from the GitHub release
 4. **Extract** — unpacks into a temporary directory
 5. **Install** — copies files to `$PREFIX/lib/excalirender/`, removes any previous installation first
 6. **Symlink** — creates `$PREFIX/bin/excalirender` pointing to the launcher script

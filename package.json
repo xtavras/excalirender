@@ -17,6 +17,7 @@
     "test:visual:update": "bun run tests/visual/run.ts --update",
     "docker:build": "docker build -t excalirender-builder . && docker run --rm --entrypoint cp -v $(pwd):/output excalirender-builder /excalirender /output/",
     "build:native": "docker build -f Dockerfile.native -o dist .",
+    "build:macos": "sh scripts/build-macos.sh",
     "test:native": "bun run tests/native/run.ts",
     "test:recursive": "bun run tests/recursive/run.ts",
     "test:unit": "bun run tests/recursive/run.ts --unit-only",

@@ -1,5 +1,6 @@
 #!/bin/sh
-# install.sh — Download and install excalirender native Linux binary.
+# install.sh — Download and install excalirender native binary
+# (Linux x64 or macOS arm64).
 #
 # Usage:
 #   curl -fsSL https://raw.githubusercontent.com/JonRC/excalirender/main/install.sh | sh
@@ -8,6 +9,7 @@
 # Options (via environment variables):
 #   VERSION=v1.0.0  Install a specific version (default: latest)
 #   PREFIX=/opt      Custom install prefix (default: /usr/local or ~/.local)
+#   REPO=owner/name  GitHub repository to download from (default: JonRC/excalirender)
 #
 # Examples:
 #   sh install.sh                              # latest, auto-detect prefix
@@ -23,8 +25,7 @@
 
 set -e
 
-REPO="JonRC/excalirender"
-ASSET_NAME="excalirender-linux-x64.tar.gz"
+REPO="${REPO:-JonRC/excalirender}"
 
 # --- helpers ---------------------------------------------------------------
 
@@ -41,16 +42,11 @@ need_cmd() {
 
 # --- preflight checks ------------------------------------------------------
 
-# OS check
-case "$(uname -s)" in
-    Linux) ;;
-    *) err "excalirender native binary is only available for Linux" ;;
-esac
-
-# Architecture check
-case "$(uname -m)" in
-    x86_64|amd64) ;;
-    *) err "excalirender native binary is only available for x86_64 (got $(uname -m))" ;;
+# OS and architecture check
+case "$(uname -s)-$(uname -m)" in
+    Linux-x86_64|Linux-amd64) ASSET_NAME="excalirender-linux-x64.tar.gz" ;;
+    Darwin-arm64) ASSET_NAME="excalirender-darwin-arm64.tar.gz" ;;
+    *) err "no native binary for $(uname -s) $(uname -m)" ;;
 esac
 
 # Need either curl or wget

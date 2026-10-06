@@ -32,3 +32,5 @@ backlog.md
 
 CLAUDE.md
 .env
+# Bun compile temp files
+*.bun-build

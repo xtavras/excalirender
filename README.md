@@ -1,6 +1,6 @@
 # excalirender
 
-CLI tool that converts [Excalidraw](https://excalidraw.com) `.excalidraw` files to PNG, SVG, and PDF. Runs as a standalone binary compiled with [Bun](https://bun.sh), available as a Docker image or a self-contained native Linux binary.
+CLI tool that converts [Excalidraw](https://excalidraw.com) `.excalidraw` files to PNG, SVG, and PDF. Runs as a standalone binary compiled with [Bun](https://bun.sh), available as a Docker image or a self-contained native binary for Linux x64 and macOS arm64.
 
 ## Get Started
 
@@ -31,6 +31,14 @@ excalirender diagram.excalidraw
 The install script downloads a self-contained binary from [GitHub Releases](https://github.com/JonRC/excalirender/releases) that bundles all libraries. Works on any Linux x64 system. Run the install command again to update to the latest version.
 
 See [docs/LINUX-INSTALLATION.md](docs/LINUX-INSTALLATION.md) for install options and uninstall instructions.
+
+### Native macOS Binary (Apple Silicon)
+
+The same install script detects macOS arm64 and downloads `excalirender-darwin-arm64.tar.gz`. Set `REPO` to install from a fork:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/JonRC/excalirender/main/install.sh | REPO=owner/excalirender sh
+```
 
 ## Usage
 
